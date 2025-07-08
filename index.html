@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Github star tracker
+    </title>
+
+    <link rel="icon" type="image/x-icon" href="Pics\Star.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            min-height: 100vh;
+            font-family: "Calibri", sans-serif;
+        }
+        #progress {
+            width: 90%;
+            max-width: 30em; 
+            height: 2em;
+            -webkit-appearance: none;
+            -moz-appearance: none;    
+            appearance: none;     
+}
+
+        #progress::-webkit-progress-bar {
+            background-color: azure; 
+            border: 0.06em solid rgb(180, 180, 180);
+ }
+
+        #progress::-webkit-progress-value {
+            background-color: gold; 
+            transition: width 0.3s ease-in-out; 
+ }
+        a{
+            color: gray;
+        }
+
+        a:hover{
+            color: black;
+        }
+    </style>
+</head>
+<body>
+    <a href="https://github.com/docuglean-ai/docuglean" target="_blank"><i class="fa fa-github" style="font-size:12em"></i></a>
+    <h1>How are the stars going?</h1>
+    <progress id="progress" max="1000" value="3"></progress>
+    <h3>Stars so far</h3>
+    <footer>Made with 🩷 by Amira</footer>
+    <script>
+        async function updateStars() {
+            try {
+                const response = await fetch('https://api.github.com/repos/docuglean-ai/docuglean');
+                const data = await response.json();
+                const stars = data.stargazers_count;
+                document.getElementById('progress').value = stars;
+                document.querySelector('h3').textContent = `${stars} stars so far!`;
+            } catch (error) {
+                console.error('Failed to fetch star count:', error);
+                document.querySelector('h3').textContent = 'Unable to load stars 😢';
+            }
+        }
+        setInterval(updateStars, 60000); 
+
+        updateStars();
+    </script>
+    
+
+</body>
+</html>
